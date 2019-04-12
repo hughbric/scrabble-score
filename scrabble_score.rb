@@ -1,12 +1,10 @@
 class Scrabble
   def initialize(word)
-    return if word.nil? || word.scan(/\w/).empty?
-    @letters = word.upcase
+    @letters = sanitize(word)
   end
 
   def score
-    return 0 unless @letters
-    letters.chars.map { |letter| letter_values[letter] }.reduce(:+)
+    letters.chars.map { |letter| letter_values[letter] }.sum
   end
 
   def self.score(word)
@@ -32,4 +30,8 @@ class Scrabble
   private
 
   attr_reader :letters
+
+  def sanitize(str)
+    String(str).strip.upcase    
+  end
 end
